@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justify Web</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <h1>Align Ascii</h1>
-    <div class="center">
-        <h2>GENERATE ASCII</h2>
-        <form action="/ascii" method="POST" class="form-input">
-            <input name="text" type="text" placeholder="Insert your text here">
-            <select name="align">
-                <option value="center">center</option>
-                <option value="right">right</option>
-                <option value="left">left</option>
-                <option value="justify">justify</option>
-            </select>
-            <button class="btn" type="submit">Generate</button>
-        </form>
-        {{if .Output}}
-        <pre>{{.Output}}</pre>
-        {{end}}
+    <div class="container">
+        <h1>Align Ascii</h1>
+        <div class="center">
+            <h2>GENERATE ASCII</h2>
+            <form action="/ascii" method="POST" class="form-input">
+                <input class="input" name="text" type="text" placeholder="Insert your text here">
+                <div class="selection-button">
+                    <select class="align" name="align">
+                        <option value="center">center</option>
+                        <option value="right">right</option>
+                        <option value="left">left</option>
+                        <option value="justify">justify</option>
+                    </select>
+                    <button class="btn" type="submit">Generate</button>
+                </div>
+            </form>
+        </div>
+        <div class="pre">
+            {{if .Output}}
+            <pre>{{.Output}}</pre>
+            {{end}}
+        </div>
     </div>
 </body>
+
 </html>

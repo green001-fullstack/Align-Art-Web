@@ -30,12 +30,14 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 	tmpl.Execute(w, data)
 }
 
-func asciiHandler(w http.ResponseWriter, r *http.Request){}
+func asciiHandler(w http.ResponseWriter, r *http.Request){
+}
 
 func main(){
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ascii", asciiHandler)
 
-	log.Println("Server Listening on http://localhost:8000")
-	http.ListenAndServe(":8000", nil)
+	log.Print("Server Listening on http://localhost:8001")
+	log.Fatal(http.ListenAndServe(":8001", nil))
 }
