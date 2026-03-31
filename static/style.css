@@ -53,6 +53,12 @@ h2{
     border-radius: 15px;
     border: 1px solid  rgb(0, 112, 107);
     text-align: center;
+    transition: box-shadow 0.5s ease;
+}
+
+.input:focus{
+    outline: none;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.774);
 }
 
 .selection-button{
