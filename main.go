@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"html/template"
 	"log"
+	"Align-Art-Web/Ascii"
 )
 
 var tmpl = template.Must(template.ParseFiles("templates/index.html"))
@@ -31,6 +32,32 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func asciiHandler(w http.ResponseWriter, r *http.Request){
+	if r.Method != http.MethodPost {
+		http.Error(w, "Only a POST request is allowed here", http.StatusMethodNotAllowed)
+		return
+	}
+
+	if r.URL.Path != "/ascii"{
+		http.Error(w, "Page not found", http.StatusNotFound)
+		return
+	}
+
+	text := r.FormValue("text")
+	alignment := r.FormValue("align")
+	banner := r.FormValue("banner")
+
+
+	ascii, err := Ascii.Justify(text, alignment, banner)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data := PageData{
+		Output: ascii,
+	}
+
+	tmpl.Execute(w, data)
 }
 
 func main(){

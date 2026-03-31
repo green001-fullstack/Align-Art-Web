@@ -1,4 +1,4 @@
-package main
+package Ascii
 
 import (
     "fmt"
@@ -8,27 +8,27 @@ import (
     "bufio"
 )
 
-func main(){
-    if len(os.Args) != 4{
-        fmt.Println("Provide the required number of argument")
-        return
-    }
+func Justify(text string, align string, banner string) (string, error){
+    // if len(os.Args) != 4{
+    //     fmt.Println("Provide the required number of argument")
+    //     return
+    // }
 
-    inputText := os.Args[2]
-    word := strings.Split(inputText, `\n`)
-    options := os.Args[1]
-
-    if !strings.HasPrefix(options, "--align="){
-        fmt.Println("Example: go run . --align=right something standard")
-    }
-
-    options = strings.TrimPrefix(options, "--align=")
-
-    banner := os.Args[3]
-
-    file, err := os.Open(banner +".txt")
+    // inputText := os.Args[2]
+    // options := os.Args[1]
+    
+    // if !strings.HasPrefix(options, "--align="){
+        //     fmt.Println("Example: go run . --align=right something standard")
+        // }
+        
+        // options = strings.TrimPrefix(options, "--align=")
+        
+        // banner := os.Args[3]
+        
+    word := strings.Split(text, `\n`)
+    file, err := os.Open("banners/" + banner + ".txt")
     if err != nil {
-        fmt.Println("Error opening file", err)
+        return "", fmt.Errorf("error opening file")
     }
     defer file.Close()
 
@@ -42,13 +42,13 @@ func main(){
             if err == io.EOF{
                 break
             }
-            fmt.Println("Error reading file", err)
+            return "", fmt.Errorf("Error reading file")
         }
     }
 
-    terminalWidth := 184
+    terminalWidth := 160
 
-    var result []string
+    var result strings.Builder
     for i, _ := range word{
         if word[i] == ""{
             continue
@@ -80,19 +80,23 @@ func main(){
         var space string
         var spaceWidth int
         var line string
-        if options == "right"{
+        if align == "right"{
             spaceWidth = terminalWidth - len(oneLineString)
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString
-            result = append(result, line)
-        } else if options == "center"{
+            result.WriteString(line + "\n") 
+        } else if align == "center"{
             spaceWidth = (terminalWidth - len(oneLineString))/2
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString + space
-            result = append(result, line)
-        } else if options == "justify"{
+            result.WriteString(line + "\n")
+        } else if align == "justify"{
             spaceWidth = terminalWidth - totalWidth
             noOfGaps := len(splitWord) - 1
+            if noOfGaps <= 0{
+                result.WriteString(oneLineString)
+                continue
+            }
             distributedSpace := spaceWidth/noOfGaps
             space = strings.Repeat(" ", distributedSpace)
 
@@ -108,16 +112,13 @@ func main(){
                     line += oneJustifyLine
                 }
             }
-                result = append(result, line)
+                result.WriteString(line + "\n")
             }else{
-            result = append(result, oneLineString)
+            result.WriteString(line + "\n")
             }
         }
     }
-
-
-    
-    for _, line := range result {
-    fmt.Println(line)
+    final := result.String()
+    return final, nil
 }
-}
+
