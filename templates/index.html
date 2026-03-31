@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justify Web</title>
+</head>
+<body>
+    <h1>Align Ascii</h1>
+    <div class="center">
+        <h2>GENERATE ASCII</h2>
+        <form action="/ascii" method="POST" class="form-input">
+            <input name="text" type="text" placeholder="Insert your text here">
+            <select name="align">
+                <option value="center">center</option>
+                <option value="right">right</option>
+                <option value="left">left</option>
+                <option value="justify">justify</option>
+            </select>
+            <button class="btn" type="submit">Generate</button>
+        </form>
+        {{if .Output}}
+        <pre>{{.Output}}</pre>
+        {{end}}
+    </div>
+</body>
+</html>
