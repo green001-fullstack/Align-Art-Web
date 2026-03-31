@@ -9,21 +9,7 @@ import (
 )
 
 func Justify(text string, align string, banner string) (string, error){
-    // if len(os.Args) != 4{
-    //     fmt.Println("Provide the required number of argument")
-    //     return
-    // }
-
-    // inputText := os.Args[2]
-    // options := os.Args[1]
     
-    // if !strings.HasPrefix(options, "--align="){
-        //     fmt.Println("Example: go run . --align=right something standard")
-        // }
-        
-        // options = strings.TrimPrefix(options, "--align=")
-        
-        // banner := os.Args[3]
         
     word := strings.Split(text, `\n`)
     file, err := os.Open("banners/" + banner + ".txt")
