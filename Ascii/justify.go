@@ -12,7 +12,7 @@ func Justify(text string, align string, banner string) (string, error){
     
         
     word := strings.Split(text, `\n`)
-    file, err := os.Open("banners/" + banner + ".txt")
+    file, err := os.Open("Ascii/banners/" + banner + ".txt")
     if err != nil {
         return "", fmt.Errorf("error opening file")
     }
@@ -80,7 +80,7 @@ func Justify(text string, align string, banner string) (string, error){
             spaceWidth = terminalWidth - totalWidth
             noOfGaps := len(splitWord) - 1
             if noOfGaps <= 0{
-                result.WriteString(oneLineString)
+                result.WriteString(oneLineString + "\n")
                 continue
             }
             distributedSpace := spaceWidth/noOfGaps
@@ -100,7 +100,7 @@ func Justify(text string, align string, banner string) (string, error){
             }
                 result.WriteString(line + "\n")
             }else{
-            result.WriteString(line + "\n")
+            result.WriteString(oneLineString + "\n")
             }
         }
     }

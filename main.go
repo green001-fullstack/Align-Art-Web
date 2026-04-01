@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"html/template"
 	"log"
-	"Align-Art-Web/Ascii"
+	"justify/Ascii"
 )
 
 var tmpl = template.Must(template.ParseFiles("templates/index.html"))
