@@ -22,7 +22,7 @@ func Justify(text string, align string, banner string) (string, error){
     var bannerString []string
     for{
         line, err:= reader.ReadString('\n')
-        line = strings.TrimSuffix(line, "\n")
+        line = strings.TrimRight(line, "\r\n")
         bannerString = append(bannerString, line)
         if err!=nil{
             if err == io.EOF{
@@ -43,7 +43,6 @@ func Justify(text string, align string, banner string) (string, error){
         // looking for the total width of each word
         var totalWidth int
         splitWord := strings.Fields(word[i])
-            // fmt.Printf("%q\n",splitWord)
             for k, _ := range splitWord{
                 width := 0
                 for _, char := range splitWord[k]{
@@ -54,6 +53,7 @@ func Justify(text string, align string, banner string) (string, error){
             }
 
         for j:=0; j < 8; j++{
+            var line string
             oneLineString := ""
             for _, char := range word[i]{
             start := int(char-32) * 9 + 1
@@ -65,19 +65,17 @@ func Justify(text string, align string, banner string) (string, error){
         // var wordWidth string
         var space string
         var spaceWidth int
-        var line string
-        switch align{
-        case "right": 
+        if align == "right"{
             spaceWidth = terminalWidth - len(oneLineString)
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString
-            result.WriteString(line + "\n")
-        case "center" :
+            result.WriteString(line + "\n") 
+        } else if align == "center"{
             spaceWidth = (terminalWidth - len(oneLineString))/2
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString + space
             result.WriteString(line + "\n")
-        case "justify" :
+        } else if align == "justify"{
             spaceWidth = terminalWidth - totalWidth
             noOfGaps := len(splitWord) - 1
             if noOfGaps <= 0{
@@ -100,12 +98,12 @@ func Justify(text string, align string, banner string) (string, error){
                 }
             }
                 result.WriteString(line + "\n")
-        default :
+            }else{
             result.WriteString(oneLineString + "\n")
-        } 
+            }
         }
     }
-    final := result.String()
+    final := result.String() 
     return final, nil
 }
 

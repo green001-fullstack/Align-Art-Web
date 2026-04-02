@@ -90,9 +90,10 @@ h2{
 }
 
 .pre{
-    width: 100%;
-    max-width: 160ch;
+    /* width: 100%; */
+    min-width: 160ch;
     background-color: bisque;
-    height: 110px;
+    min-height: 110px;
+    overflow: auto;
     font-family: monospace;
 }
