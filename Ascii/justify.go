@@ -66,17 +66,18 @@ func Justify(text string, align string, banner string) (string, error){
         var space string
         var spaceWidth int
         var line string
-        if align == "right"{
+        switch align{
+        case "right": 
             spaceWidth = terminalWidth - len(oneLineString)
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString
-            result.WriteString(line + "\n") 
-        } else if align == "center"{
+            result.WriteString(line + "\n")
+        case "center" :
             spaceWidth = (terminalWidth - len(oneLineString))/2
             space = strings.Repeat(" ", spaceWidth)
             line = space + oneLineString + space
             result.WriteString(line + "\n")
-        } else if align == "justify"{
+        case "justify" :
             spaceWidth = terminalWidth - totalWidth
             noOfGaps := len(splitWord) - 1
             if noOfGaps <= 0{
@@ -99,9 +100,9 @@ func Justify(text string, align string, banner string) (string, error){
                 }
             }
                 result.WriteString(line + "\n")
-            }else{
+        default :
             result.WriteString(oneLineString + "\n")
-            }
+        } 
         }
     }
     final := result.String()
